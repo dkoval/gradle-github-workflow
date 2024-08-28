@@ -45,5 +45,6 @@ jobs:
         if: steps.tag-new-version.outputs.current-version != steps.tag-new-version.outputs.previous-version
         with:
           tag_name: ${{ steps.tag-new-version.outputs.tag }}
+          generate_release_notes: true
           files: |
             build/distributions/*
