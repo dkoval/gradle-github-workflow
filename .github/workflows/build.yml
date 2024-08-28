@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -27,14 +29,15 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-  # Based on https://github.com/smyrick/kotlin-extensions/blob/master/.github/workflows/build-master.yml
-  release-notes:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Release Drafter
-        uses: release-drafter/release-drafter@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Detect and tag new version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          tag-template: v{VERSION}
+          version-command: |
+            cat gradle.properties | grep -i '^version=' | cut -d '=' -f2
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: build/distributions/*
