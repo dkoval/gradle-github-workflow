@@ -15,23 +15,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version-file: .java-version
-
-      # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
-      # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Compile project
-        run: ./gradlew compile
-
       - name: Detect and tag new version
         uses: salsify/action-detect-and-tag-new-version@v2
         with:
           tag-template: v{VERSION}
           version-command: |
-            cat gradle.properties| grep -i '^version' | cut -d '=' -f2
+            cat gradle.properties | grep -i '^version' | cut -d '=' -f2
