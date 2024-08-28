@@ -25,15 +25,6 @@ distributions {
 }
 
 tasks {
-    register("currentVersion") {
-        group = "Custom"
-        description = "Prints the current project version"
-
-        doLast {
-            println(project.version)
-        }
-    }
-
     test {
         useJUnitPlatform()
     }
