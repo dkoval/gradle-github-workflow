@@ -26,7 +26,12 @@ distributions {
 
 tasks {
     register("currentVersion") {
-        println(project.version)
+        group = "Custom"
+        description = "Prints the current project version"
+
+        doLast {
+            println(project.version)
+        }
     }
 
     test {
