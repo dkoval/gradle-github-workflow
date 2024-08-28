@@ -7,13 +7,15 @@ on:
       - main
 
 jobs:
-  build:
+  build-tag-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@v4
