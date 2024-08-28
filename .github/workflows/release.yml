@@ -38,7 +38,7 @@ jobs:
         with:
           tag-template: v{VERSION}
           version-command: |
-            cat gradle.properties | grep -i '^version' | cut -d '=' -f2
+            grep -E '^version\s*=' gradle.properties | cut -d '=' -f2 | tr -d ' ' | tr -d '\r'
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
