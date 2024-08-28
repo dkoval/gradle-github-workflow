@@ -1,10 +1,7 @@
 ---
-name: Build
+name: Pull Request
 
-on:
-  push:
-    branches:
-      - main
+on: [ pull_request ]
 
 jobs:
   build:
@@ -26,15 +23,3 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-
-  # Based on https://github.com/smyrick/kotlin-extensions/blob/master/.github/workflows/build-master.yml
-  release-notes:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Release Drafter
-        uses: release-drafter/release-drafter@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
