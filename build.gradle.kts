@@ -25,6 +25,10 @@ distributions {
 }
 
 tasks {
+    register("currentVersion") {
+        println(project.version)
+    }
+
     test {
         useJUnitPlatform()
     }

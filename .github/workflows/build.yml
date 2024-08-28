@@ -34,9 +34,10 @@ jobs:
       - name: Detect and tag new version
         uses: salsify/action-detect-and-tag-new-version@v2
         with:
+          create-tag: true
           tag-template: v{VERSION}
           version-command: |
-            cat gradle.properties | grep -i '^version=' | cut -d '=' -f2
+            ./gradlew :currentVersion
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
