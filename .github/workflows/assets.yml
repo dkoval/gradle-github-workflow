@@ -1,11 +1,16 @@
 ---
-name: Pull Request
+name: Upload Release Assets
 
-on: [ pull_request ]
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  build:
+  upload-release-assets:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -23,3 +28,8 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/distributions/*
