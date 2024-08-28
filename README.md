@@ -4,7 +4,7 @@
 
 A simple project to play with GitHub Actions for a Gradle project
 
-The project defined 2 independent GitHub workflows
+The project defines 2 independent GitHub workflows:
 
 - [CI](.github/workflows/ci.yml)
 - [Release](.github/workflows/release.yml)
