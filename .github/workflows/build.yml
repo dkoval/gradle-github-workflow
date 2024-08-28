@@ -3,8 +3,7 @@ name: Build
 
 on:
   push:
-    branches-ignore:
-      # Release workflow is meant be triggered when pushing to the main branch
+    branches:
       - main
   pull_request:
     branches:
