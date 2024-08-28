@@ -37,7 +37,7 @@ jobs:
           create-tag: true
           tag-template: v{VERSION}
           version-command: |
-            ./gradlew :currentVersion
+            ./gradlew currentVersion
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
