@@ -15,11 +15,35 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
         with:
+          # required by salsify/action-detect-and-tag-new-version@v2
           fetch-depth: 0
 
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version-file: .java-version
+
+      # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
+      # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
       - name: Detect and tag new version
+        id: tag-new-version
         uses: salsify/action-detect-and-tag-new-version@v2
         with:
           tag-template: v{VERSION}
           version-command: |
             cat gradle.properties | grep -i '^version' | cut -d '=' -f2
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        if: steps.tag-new-version.outputs.current-version != steps.tag-new-version.outputs.previous-version
+        with:
+          tag_name: ${{ steps.tag-new-version.outputs.tag }}
+          files: |
+            build/distributions/*

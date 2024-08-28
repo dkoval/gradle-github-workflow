@@ -4,7 +4,8 @@ name: CI
 on:
   push:
     branches:
-      - main
+      # release.yml workflow is meant to be triggered on the main branch
+      - '!main'
   pull_request:
     branches:
       - main
