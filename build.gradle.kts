@@ -29,6 +29,11 @@ tasks {
         useJUnitPlatform()
     }
 
+    distTar {
+        compression = Compression.GZIP
+        archiveExtension = "tar.gz"
+    }
+
     wrapper {
         gradleVersion = "8.8"
     }
